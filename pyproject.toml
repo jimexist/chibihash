@@ -1,17 +1,16 @@
 [project]
 name = "chibihash"
-version = "0.1.0"
-description = "Python port of ChibiHash"
+version = "0.1.1"
+description = "Chibihash implementation in Rust/Python"
 readme = "README.md"
-requires-python = ">=3.8"
-dependencies = []
 authors = [{ name = "Jiayu Liu", email = "jiayu@hey.com" }]
+requires-python = ">=3.9"
+dependencies = []
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -27,9 +26,14 @@ file = "LICENSE"
 homepage = "https://github.com/jimexist/chibihash"
 issues = "https://github.com/jimexist/chibihash/issues"
 
+[tool.maturin]
+module-name = "chibihash._core"
+python-packages = ["chibihash"]
+python-source = "src"
+
 [tool.uv]
 dev-dependencies = ["pytest>=8.3.3", "ruff>=0.7.4"]
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
