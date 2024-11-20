@@ -3,8 +3,8 @@ name = "chibihash"
 version = "0.1.2"
 edition = "2021"
 description = "Chibihash implementation in Rust/Python"
-homepage = "https://github.com/chibihash/chibihash-rs"
-repository = "https://github.com/chibihash/chibihash-rs"
+homepage = "https://github.com/jimexist/chibihash"
+repository = "https://github.com/jimexist/chibihash"
 license = "Apache-2.0"
 
 [lib]
