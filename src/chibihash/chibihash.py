@@ -1,7 +1,9 @@
+MASK64 = 0xFFFFFFFFFFFFFFFF
+
+
 def load64le(p: bytes, offset: int = 0) -> int:
-    """Load 8 bytes as a 64-bit little endian integer."""
     return (
-        p[offset] << 0
+        p[offset]
         | p[offset + 1] << 8
         | p[offset + 2] << 16
         | p[offset + 3] << 24
@@ -9,26 +11,16 @@ def load64le(p: bytes, offset: int = 0) -> int:
         | p[offset + 5] << 40
         | p[offset + 6] << 48
         | p[offset + 7] << 56
-    )
+    ) & MASK64
 
 
 def chibihash64(key: bytes, seed: int = 0) -> int:
-    """64-bit hash function.
-
-    Args:
-        key: Input bytes to hash
-        seed: Optional seed value (default 0)
-
-    Returns:
-        64-bit hash value
-    """
     k = key
     length = len(k)
 
     P1 = 0x2B7E151628AED2A5
     P2 = 0x9E3793492EEDC3F7
     P3 = 0x3243F6A8885A308D
-    MASK64 = 0xFFFFFFFFFFFFFFFF
 
     h = [P1, P2, P3, seed]
 
@@ -38,16 +30,17 @@ def chibihash64(key: bytes, seed: int = 0) -> int:
             lane = load64le(k, offset + i * 8)
             h[i] ^= lane
             h[i] = (h[i] * P1) & MASK64
-            h[(i + 1) & 3] ^= ((lane << 40) | (lane >> 24)) & MASK64
+            h[(i + 1) & 3] ^= (lane << 40 | lane >> 24) & MASK64
         length -= 32
         offset += 32
 
-    h[0] = (h[0] + (((length << 32) | (length >> 32)) & MASK64)) & MASK64
+    h[0] = (h[0] + ((length << 32 | length >> 32) & MASK64)) & MASK64
 
     if length & 1:
         h[0] ^= k[offset]
         length -= 1
         offset += 1
+
     h[0] = (h[0] * P2) & MASK64
     h[0] ^= h[0] >> 31
 
@@ -78,7 +71,6 @@ def chibihash64(key: bytes, seed: int = 0) -> int:
     x ^= (h[2] * ((h[0] >> 32) | 1)) & MASK64
     x ^= (h[3] * ((h[1] >> 32) | 1)) & MASK64
 
-    # moremur mixing
     x ^= x >> 27
     x = (x * 0x3C79AC492BA7B653) & MASK64
     x ^= x >> 33
