@@ -9,8 +9,8 @@ def test_reference_values():
     assert chibihash64(b"123") == 0x893A5CCA05B0A883
     assert chibihash64(b"abcdefgh") == 0x8F922660063E3E75
     assert chibihash64(b"Hello, world!") == 0x5AF920D8C0EBFE9F
-    # assert chibihash64(b"qwertyuiopasdfghjklzxcvbnm123456") == 0x2EF296DB634F6551
-    # assert chibihash64(b"qwertyuiopasdfghjklzxcvbnm123456789") == 0x0F56CF3735FFA943
+    assert chibihash64(b"qwertyuiopasdfghjklzxcvbnm123456") == 0x2EF296DB634F6551
+    assert chibihash64(b"qwertyuiopasdfghjklzxcvbnm123456789") == 0x0F56CF3735FFA943
 
 
 def test_same_string_same_hash():
