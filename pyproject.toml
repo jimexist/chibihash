@@ -1,6 +1,6 @@
 [project]
 name = "chibihash"
-version = "0.1.2"
+version = "0.2.0"
 description = "Chibihash implementation in Rust/Python"
 readme = "README.md"
 authors = [{ name = "Jiayu Liu", email = "jiayu@hey.com" }]
